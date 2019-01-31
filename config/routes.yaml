@@ -1,3 +1,9 @@
 #home:
 #    path: /
 #    controller: App\Controller\HomeController::home
+
+# config\packages\fos_rest.yaml
+
+users:
+  type: rest
+  resource: App\Controller\UserController
