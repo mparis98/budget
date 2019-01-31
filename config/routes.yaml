@@ -7,3 +7,7 @@
 users:
   type: rest
   resource: App\Controller\UserController
+
+home:
+  type: rest
+  resource: App\Controller\HomeController

@@ -14,7 +14,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class User implements UserInterface
 {
     /**
-     * @Groups("user")
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -22,27 +21,27 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @Groups("user")
-     * @ORM\Column(type="string", length=255)
+     * @Groups({"user_light", "user_full"})
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $firstname;
 
     /**
-     * @Groups("user")
-     * @ORM\Column(type="string", length=255)
+     * @Groups("user_full")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lastname;
 
     /**
-     * @Groups("user")
+     * @Groups({"user_light", "user_full"})
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
-    private $birthday;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="simple_array")
@@ -50,19 +49,40 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $apiKey;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="user")
+     * @Groups("user_full")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $articles;
+    private $address;
+
+    /**
+     * @Groups("user_full")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $country;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Card", mappedBy="user")
+     */
+    private $cards;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Subscription", inversedBy="user")
+     */
+    private $subscription;
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->roles = array('ROLE_USER');
+        $this->apiKey= hash('md5',$this->email);
+        $this->createdAt=new \DateTime();
+        $this->subscriptions = new ArrayCollection();
+        $this->cards = new ArrayCollection();
 
     }
 
@@ -103,18 +123,6 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getBirthday(): ?\DateTimeInterface
-    {
-        return $this->birthday;
-    }
-
-    public function setBirthday(\DateTimeInterface $birthday): self
-    {
-        $this->birthday = $birthday;
 
         return $this;
     }
@@ -164,35 +172,140 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Article[]
+     * @return mixed
      */
-    public function getArticles(): Collection
+    public function getCreatedAt()
     {
-        return $this->articles;
+        return $this->createdAt;
     }
 
-    public function addArticle(Article $article): self
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt): void
     {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->setUser($this);
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address): void
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param mixed $country
+     */
+    public function setCountry($country): void
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * @return Collection|Subscription[]
+     */
+    public function getSubscriptions(): Collection
+    {
+        return $this->subscriptions;
+    }
+
+    public function addSubscription(Subscription $subscription): self
+    {
+        if (!$this->subscriptions->contains($subscription)) {
+            $this->subscriptions[] = $subscription;
+            $subscription->setUsers($this);
         }
 
         return $this;
     }
 
-    public function removeArticle(Article $article): self
+    public function removeSubscription(Subscription $subscription): self
     {
-        if ($this->articles->contains($article)) {
-            $this->articles->removeElement($article);
+        if ($this->subscriptions->contains($subscription)) {
+            $this->subscriptions->removeElement($subscription);
             // set the owning side to null (unless already changed)
-            if ($article->getUser() === $this) {
-                $article->setUser(null);
+            if ($subscription->getUsers() === $this) {
+                $subscription->setUsers(null);
             }
         }
 
         return $this;
     }
+
+    public function getCard(): ?Card
+    {
+        return $this->card;
+    }
+
+    public function setCard(?Card $card): self
+    {
+        $this->card = $card;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Card[]
+     */
+    public function getCards(): Collection
+    {
+        return $this->cards;
+    }
+
+    public function addCard(Card $card): self
+    {
+        if (!$this->cards->contains($card)) {
+            $this->cards[] = $card;
+            $card->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCard(Card $card): self
+    {
+        if ($this->cards->contains($card)) {
+            $this->cards->removeElement($card);
+            // set the owning side to null (unless already changed)
+            if ($card->getUser() === $this) {
+                $card->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSubscription(): ?Subscription
+    {
+        return $this->subscription;
+    }
+
+    public function setSubscription(?Subscription $subscription): self
+    {
+        $this->subscription = $subscription;
+
+        return $this;
+    }
+
+
 
 
 }
