@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Intl\Intl;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CardRepository")
@@ -35,7 +36,7 @@ class Card
     /**
      * @Groups("card_full")
      * @ORM\Column(type="string", length=255)
-     * @Assert\Range(
+     * @Assert\Length(
      *      min = 16,
      *      max = 16,
      *      minMessage = "{{ limit }} numbers required",
@@ -59,7 +60,6 @@ class Card
      *      minMessage = "{{ limit }} money min",
      *      maxMessage = "{{ limit }} money max"
      * )
-     * @Assert\Currency
      */
     private $value;
 

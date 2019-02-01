@@ -15,6 +15,7 @@ use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 
 class HomeController extends AbstractFOSRestController
@@ -38,30 +39,68 @@ class HomeController extends AbstractFOSRestController
      *         response="200",
      *         description="Successful response",
      *
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Bad Request"
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Authentication Required (no usertoken)"
+     *
+     *     ),
+     *     @SWG\Response(
+     *         response="403",
+     *         description="Invalid Credentials (wrong usertoken)"
+     *
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Not Found"
+     *
      *     )
      * )
      */
     public function getApiUser(User $user){
-        return $this->view($user);
+        return $this->view($user, 200);
     }
 
     /**
      * @Rest\Get("/users")
      * @Rest\View(serializerGroups={"user_light","card_light","sub_full"})
      * @Operation(
-     *     operationId="getUser",
+     *     operationId="getAllUser",
      *     tags={"Anonymous"},
      *     summary="Get a collection of `User` entities",
      *     @SWG\Response(
      *         response="200",
      *         description="Successful response",
      *
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Bad Request"
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Authentication Required (no usertoken)"
+     *
+     *     ),
+     *     @SWG\Response(
+     *         response="403",
+     *         description="Invalid Credentials (wrong usertoken)"
+     *
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Not Found"
+     *
      *     )
      * )
      */
     public function getFullApiUser(){
         $users = $this->userRepository->findAll();
-        return $this->view($users);
+        return $this->view($users,200);
     }
 
     /**
@@ -75,11 +114,30 @@ class HomeController extends AbstractFOSRestController
      *         response="200",
      *         description="Successful response",
      *
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Bad Request"
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Authentication Required (no usertoken)"
+     *
+     *     ),
+     *     @SWG\Response(
+     *         response="403",
+     *         description="Invalid Credentials (wrong usertoken)"
+     *
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Not Found"
+     *
      *     )
      * )
      */
     public function getSub(Subscription $subscription){
-        return $this->view($subscription);
+        return $this->view($subscription,200);
     }
 
     /**
@@ -93,12 +151,31 @@ class HomeController extends AbstractFOSRestController
      *         response="200",
      *         description="Successful response",
      *
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Bad Request"
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Authentication Required (no usertoken)"
+     *
+     *     ),
+     *     @SWG\Response(
+     *         response="403",
+     *         description="Invalid Credentials (wrong usertoken)"
+     *
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Not Found"
+     *
      *     )
      * )
      */
     public function getFullSub(){
         $subscriptions = $this->getDoctrine()->getRepository(Subscription::class)->findAll();
-        return $this->view($subscriptions);
+        return $this->view($subscriptions,200);
     }
 
     /**
@@ -112,6 +189,25 @@ class HomeController extends AbstractFOSRestController
      *     @SWG\Response(
      *         response="200",
      *         description="Successful response",
+     *
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Bad Request"
+     *     ),
+     *     @SWG\Response(
+     *         response="401",
+     *         description="Authentication Required (no usertoken)"
+     *
+     *     ),
+     *     @SWG\Response(
+     *         response="403",
+     *         description="Invalid Credentials (wrong usertoken)"
+     *
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Not Found"
      *
      *     )
      * )
@@ -132,7 +228,7 @@ class HomeController extends AbstractFOSRestController
         else{
             $this->em->persist($user);
             $this->em->flush();
-            return $this->view($user);
+            return $this->view($user,201);
         }
     }
 
