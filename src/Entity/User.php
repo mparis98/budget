@@ -69,7 +69,6 @@ class User implements UserInterface
     /**
      * @Groups("user_full")
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Country
      */
     private $country;
 

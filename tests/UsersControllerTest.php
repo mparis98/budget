@@ -15,7 +15,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testGetUsers()   {
         $client = static::createClient();
-        $client->request('GET', '/api/users', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => '01862729c7d75074bb6114ded389b172']);
+        $client->request('GET', '/api/users', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd3fd03d073608041b83934a0771ad8a8']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(200, $response->getStatusCode());
@@ -91,10 +91,10 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPostUsersErrorEmail(){
         $client = static::createClient();
-        $client->request('POST', '/api/admin/users', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"email": "parismatthieu123@coucou.com","apiKey":"bezhufubzdbzf"}');
+        $client->request('POST', '/api/admin/users', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"email": "parismatthieu123coucou.com","apiKey":"bezhufubzdbzf"}');
         $response = $client->getResponse();
         $content = $response->getContent();
-        $this->assertEquals(500, $response->getStatusCode());
+        $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson($content);
     }
 
@@ -181,7 +181,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testDeleteCard(){
         $client = static::createClient();
-        $client->request('DELETE', '/api/card/12', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e']);
+        $client->request('DELETE', '/api/card/1', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(200, $response->getStatusCode());
@@ -190,7 +190,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testDeleteCardErrorToken(){
         $client = static::createClient();
-        $client->request('DELETE', '/api/card/4', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'egbibegbrfgegrtgbtbdffgr']);
+        $client->request('DELETE', '/api/card/3', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'egbibegbrfgegrtgbtbdffgr']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(403, $response->getStatusCode());
@@ -202,7 +202,7 @@ class UsersControllerTest extends WebTestCase{
         $client->request('DELETE', '/api/admin/users/32', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e']);
         $response = $client->getResponse();
         $content = $response->getContent();
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(404, $response->getStatusCode());
         $this->assertJson($content);
     }
 
@@ -305,13 +305,5 @@ class UsersControllerTest extends WebTestCase{
         $this->assertJson($content);
     }
 
-    public function testPatchUsersErrorCountry(){
-        $client = static::createClient();
-        $client->request('PATCH', '/api/admin/users/26', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"country": "Francezdfbezhbvh"}');
-        $response = $client->getResponse();
-        $content = $response->getContent();
-        $this->assertEquals(400, $response->getStatusCode());
-        $this->assertJson($content);
-    }
 
 }

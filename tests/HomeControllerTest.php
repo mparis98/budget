@@ -15,7 +15,7 @@ class HomeControllerTest extends WebTestCase{
 
     public function testGetUsers()   {
         $client = static::createClient();
-        $client->request('GET', '/users', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => '01862729c7d75074bb6114ded389b172']);
+        $client->request('GET', '/users', [], [], ['HTTP_ACCEPT' => 'application/json']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(200, $response->getStatusCode());
@@ -26,7 +26,7 @@ class HomeControllerTest extends WebTestCase{
 
     public function testGetUsersError()   {
         $client = static::createClient();
-        $client->request('GET', '/users/100', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => '01862729c7d75074bb6114ded389b172']);
+        $client->request('GET', '/users/100', [], [], ['HTTP_ACCEPT' => 'application/json']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(404, $response->getStatusCode());
@@ -37,7 +37,7 @@ class HomeControllerTest extends WebTestCase{
 
     public function testGetSub()   {
         $client = static::createClient();
-        $client->request('GET', '/subscription/41', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e']);
+        $client->request('GET', '/subscription/41', [], [], ['HTTP_ACCEPT' => 'application/json']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(200, $response->getStatusCode());
@@ -46,7 +46,7 @@ class HomeControllerTest extends WebTestCase{
 
     public function testGetSubError()   {
         $client = static::createClient();
-        $client->request('GET', '/subscription/1000', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e']);
+        $client->request('GET', '/subscription/1000', [], [], ['HTTP_ACCEPT' => 'application/json']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(404, $response->getStatusCode());
@@ -55,7 +55,7 @@ class HomeControllerTest extends WebTestCase{
 
     public function testPostUsers(){
         $client = static::createClient();
-        $client->request('POST', '/users', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"email": "parismatthieu123@gmail.com","apiKey":"bezhufubzdbzf"}');
+        $client->request('POST', '/users', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json'],'{"email": "parismatthiehbbhvu123@gmail.com","apiKey":"bezhufubhjbjbzdbzf"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(201, $response->getStatusCode());
@@ -64,10 +64,10 @@ class HomeControllerTest extends WebTestCase{
 
     public function testPostUsersErrorEmail(){
         $client = static::createClient();
-        $client->request('POST', '/users', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"email": "parismatthieu123@coucou.com","apiKey":"bezhufubzdbzf"}');
+        $client->request('POST', '/users', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json'],'{"email": "parismatthinbhbheu123coucou.com","apiKey":"bezhufuhhuiuhbzdbzf"}');
         $response = $client->getResponse();
         $content = $response->getContent();
-        $this->assertEquals(500, $response->getStatusCode());
+        $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson($content);
     }
 
