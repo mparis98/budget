@@ -1,8 +1,8 @@
 nelmio_api_doc:
     documentation:
         info:
-            title: My App
-            description: This is an awesome app!
+            title: Budget API
+            description: TP Symfony
             version: 1.0.0
         securityDefinitions:
             api_key:

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -35,10 +36,15 @@ class User implements UserInterface
     /**
      * @Groups({"user_light", "user_full"})
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
      */
     private $email;
 
     /**
+     * @Groups("user_full")
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -49,6 +55,7 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @Groups("user_full")
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $apiKey;
@@ -62,15 +69,18 @@ class User implements UserInterface
     /**
      * @Groups("user_full")
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Country
      */
     private $country;
 
     /**
+     * @Groups({"user_light", "user_full"})
      * @ORM\OneToMany(targetEntity="App\Entity\Card", mappedBy="user")
      */
     private $cards;
 
     /**
+     * @Groups({"user_light", "user_full"})
      * @ORM\ManyToOne(targetEntity="App\Entity\Subscription", inversedBy="user")
      */
     private $subscription;

@@ -1,0 +1,5 @@
+App\Entity\Subscription:
+    subscription_{1..10}:
+        name: <name()>
+        slogan: <text(200)>
+        url: <url()>

@@ -3,5 +3,8 @@ App\Entity\User:
         firstname: <firstName()>
         lastname: <lastName()>
         email: <email()>
-        birthday: <dateTimeBetween('-100 years', '-10 years')>
+        createdAt: <dateTimeBetween('-2 years', '-1 years')>
         apiKey: <hash(md5,<email()>)>
+        address: <address()>
+        country: <country()>
+        subscription: '@subscription_*'
