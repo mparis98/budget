@@ -88,7 +88,7 @@ class User implements UserInterface
     {
         $this->articles = new ArrayCollection();
         $this->roles = array('ROLE_USER');
-        $this->apiKey= hash('md5',$this->email);
+        $this->apiKey= uniqid('', true);
         $this->createdAt=new \DateTime();
         $this->subscriptions = new ArrayCollection();
         $this->cards = new ArrayCollection();
