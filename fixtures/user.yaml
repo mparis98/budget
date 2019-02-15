@@ -1,5 +1,24 @@
 App\Entity\User:
-    user_{1..10}:
+    user_1:
+        firstname: <firstName()>
+        lastname: <lastName()>
+        email: <email()>
+        createdAt: <dateTimeBetween('-2 years', '-1 years')>
+        apiKey: 'azerty'
+        address: <address()>
+        country: <country()>
+        subscription: '@subscription_*'
+    user_2:
+        firstname: <firstName()>
+        lastname: <lastName()>
+        email: <email()>
+        createdAt: <dateTimeBetween('-2 years', '-1 years')>
+        apiKey: 'admin'
+        address: <address()>
+        country: <country()>
+        subscription: '@subscription_*'
+        roles: [ROLE_ADMIN]
+    user_{3..10}:
         firstname: <firstName()>
         lastname: <lastName()>
         email: <email()>

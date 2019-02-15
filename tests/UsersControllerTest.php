@@ -15,7 +15,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testGetUsers()   {
         $client = static::createClient();
-        $client->request('GET', '/api/users', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd3fd03d073608041b83934a0771ad8a8']);
+        $client->request('GET', '/api/users', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => 'azerty']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(200, $response->getStatusCode());
@@ -35,7 +35,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testGetUsersError()   {
         $client = static::createClient();
-        $client->request('GET', '/api/users/100', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => '01862729c7d75074bb6114ded389b172']);
+        $client->request('GET', '/api/users/100', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => 'azerty']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(404, $response->getStatusCode());
@@ -46,7 +46,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testGetSub()   {
         $client = static::createClient();
-        $client->request('GET', '/api/admin/subscription/41', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e']);
+        $client->request('GET', '/api/admin/subscription/4', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(200, $response->getStatusCode());
@@ -55,7 +55,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testGetSubError()   {
         $client = static::createClient();
-        $client->request('GET', '/api/admin/subscription/1000', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e']);
+        $client->request('GET', '/api/admin/subscription/1000', [], [], ['HTTP_ACCEPT' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(404, $response->getStatusCode());
@@ -64,7 +64,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testGetSubErrorToken(){
         $client = static::createClient();
-        $client->request('GET', '/api/admin/subscription/41', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => '01862729c7d75074bb6114ded389b172']);
+        $client->request('GET', '/api/admin/subscription/4', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'azerty']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(403, $response->getStatusCode());
@@ -73,7 +73,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPostUsers(){
         $client = static::createClient();
-        $client->request('POST', '/api/admin/users', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"email": "parismatthieu123@gmail.com","apiKey":"bezhufubzdbzf"}');
+        $client->request('POST', '/api/admin/users', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin'],'{"email": "parismatthieu123@gmail.com","apiKey":"bezhufubzdbzf"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(201, $response->getStatusCode());
@@ -82,7 +82,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPostUserErrorToken(){
         $client = static::createClient();
-        $client->request('POST', '/api/admin/users', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => '01862729c7d75074bb6114ded389b172']);
+        $client->request('POST', '/api/admin/users', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'azerty']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(403, $response->getStatusCode());
@@ -91,7 +91,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPostUsersErrorEmail(){
         $client = static::createClient();
-        $client->request('POST', '/api/admin/users', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"email": "parismatthieu123coucou.com","apiKey":"bezhufubzdbzf"}');
+        $client->request('POST', '/api/admin/users', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin'],'{"email": "parismatthieu123coucou.com","apiKey":"bezhufubzdbzf"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(400, $response->getStatusCode());
@@ -100,7 +100,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testDeleteSubError(){
         $client = static::createClient();
-        $client->request('DELETE', '/api/admin/subscription/41', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e']);
+        $client->request('DELETE', '/api/admin/subscription/1', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(500, $response->getStatusCode());
@@ -109,7 +109,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testDeleteSubErrorToken(){
         $client = static::createClient();
-        $client->request('DELETE', '/api/admin/subscription/41', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => '01862729c7d75074bb6114ded389b172']);
+        $client->request('DELETE', '/api/admin/subscription/1', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'azerty']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(403, $response->getStatusCode());
@@ -118,7 +118,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPostCard(){
         $client = static::createClient();
-        $client->request('POST', '/api/admin/card', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"name":"Test", "creditCardType":"MASTERCARD","creditCardNumber":"1234567843218765","currencyCode":"RON","value":"500","user": {"id":"33"}}');
+        $client->request('POST', '/api/admin/card', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin'],'{"name":"Test", "creditCardType":"MASTERCARD","creditCardNumber":"1234567843218765","currencyCode":"RON","value":"500","user": {"id":"33"}}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(201, $response->getStatusCode());
@@ -127,7 +127,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPostCardErrorToken(){
         $client = static::createClient();
-        $client->request('POST', '/api/admin/card', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'ngjergregehgerhgbrh'],'{"name":"Test", "creditCardType":"MASTERCARD","creditCardNumber":"1234567843218765","currencyCode":"RON","value":"500","user": {"id":"33"}}');
+        $client->request('POST', '/api/admin/card', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'azerty'],'{"name":"Test", "creditCardType":"MASTERCARD","creditCardNumber":"1234567843218765","currencyCode":"RON","value":"500","user": {"id":"33"}}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(403, $response->getStatusCode());
@@ -136,7 +136,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPostCardErrorCreditNumber(){
         $client = static::createClient();
-        $client->request('POST', '/api/admin/card', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"user": {"id":"33"},"name":"Test", "creditCardType":"MASTERCARD","creditCardNumber":"123456784312123343218765","currencyCode":"RON","value":"500"}');
+        $client->request('POST', '/api/admin/card', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin'],'{"user": {"id":"33"},"name":"Test", "creditCardType":"MASTERCARD","creditCardNumber":"123456784312123343218765","currencyCode":"RON","value":"500"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(400, $response->getStatusCode());
@@ -145,7 +145,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPostCardErrorValue(){
         $client = static::createClient();
-        $client->request('POST', '/api/admin/card', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"user": {"id":"33"},"name":"Test", "creditCardType":"MASTERCARD","creditCardNumber":"1234567843218765","currencyCode":"RON","value":"1000000"}');
+        $client->request('POST', '/api/admin/card', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin'],'{"user": {"id":"33"},"name":"Test", "creditCardType":"MASTERCARD","creditCardNumber":"1234567843218765","currencyCode":"RON","value":"1000000"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(400, $response->getStatusCode());
@@ -154,7 +154,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPostSub(){
         $client = static::createClient();
-        $client->request('POST', '/api/admin/subscription', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"name": "Coucou rge","slogan":"edfgbbzvbhe ezjfgbbregheb zefbvber"}');
+        $client->request('POST', '/api/admin/subscription', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin'],'{"name": "Coucou rge","slogan":"edfgbbzvbhe ezjfgbbregheb zefbvber"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(201, $response->getStatusCode());
@@ -163,7 +163,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPostSubErrorToken(){
         $client = static::createClient();
-        $client->request('POST', '/api/admin/subscription', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => '01862729c7d75074bb6114ded389b172'],'{"name": "Coucou rge","slogan":"edfgbbzvbhe ezjfgbbregheb zefbvber"}');
+        $client->request('POST', '/api/admin/subscription', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'azerty'],'{"name": "Coucou rge","slogan":"edfgbbzvbhe ezjfgbbregheb zefbvber"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(403, $response->getStatusCode());
@@ -172,7 +172,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPostSubErrorUrl(){
         $client = static::createClient();
-        $client->request('POST', '/api/admin/subscription', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"name": "Coucou rge","slogan":"edfgbbzvbhe ezjfgbbregheb zefbvber", "url":"rghrbgrebrgv/nfrgjorng/rngj"}');
+        $client->request('POST', '/api/admin/subscription', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin'],'{"name": "Coucou rge","slogan":"edfgbbzvbhe ezjfgbbregheb zefbvber", "url":"rghrbgrebrgv/nfrgjorng/rngj"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(400, $response->getStatusCode());
@@ -181,7 +181,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testDeleteCard(){
         $client = static::createClient();
-        $client->request('DELETE', '/api/card/1', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e']);
+        $client->request('DELETE', '/api/card/1', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(200, $response->getStatusCode());
@@ -199,7 +199,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testDeleteUser(){
         $client = static::createClient();
-        $client->request('DELETE', '/api/admin/users/32', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e']);
+        $client->request('DELETE', '/api/admin/users/32', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(404, $response->getStatusCode());
@@ -208,7 +208,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testDeleteUserErrorToken(){
         $client = static::createClient();
-        $client->request('DELETE', '/api/admin/users/32', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'egbibegbrfgegrtgbtbdffgr']);
+        $client->request('DELETE', '/api/admin/users/32', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'azerty']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(403, $response->getStatusCode());
@@ -217,7 +217,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testDeleteUserError(){
         $client = static::createClient();
-        $client->request('DELETE', '/api/admin/users/34322', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e']);
+        $client->request('DELETE', '/api/admin/users/34322', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(404, $response->getStatusCode());
@@ -226,7 +226,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPatchSub(){
         $client = static::createClient();
-        $client->request('PATCH', '/api/admin/subscription/32', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"name": "Coucou rge","url":"https://github.com/mparis98/budget"}');
+        $client->request('PATCH', '/api/admin/subscription/2', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin'],'{"name": "Coucou rge","url":"https://github.com/mparis98/budget"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(200, $response->getStatusCode());
@@ -235,7 +235,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPatchSubErrorToken(){
         $client = static::createClient();
-        $client->request('PATCH', '/api/admin/subscription/32', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'fgnerjnrehber'],'{"name": "Coucou rge","url":"https://github.com/mparis98/budget"}');
+        $client->request('PATCH', '/api/admin/subscription/2', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'azerty'],'{"name": "Coucou rge","url":"https://github.com/mparis98/budget"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(403, $response->getStatusCode());
@@ -253,7 +253,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPatchCard(){
         $client = static::createClient();
-        $client->request('PATCH', '/api/card/3', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"creditCardNumber": "0987654312345678","value":"6987"}');
+        $client->request('PATCH', '/api/card/3', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'azerty'],'{"creditCardNumber": "0987654312345678","value":"6987"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(200, $response->getStatusCode());
@@ -271,7 +271,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPatchCardErrorCreditNumber(){
         $client = static::createClient();
-        $client->request('PATCH', '/api/card/3', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"creditCardNumber": "098765123456784312345678","value":"6987"}');
+        $client->request('PATCH', '/api/card/3', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin'],'{"creditCardNumber": "098765123456784312345678","value":"6987"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(400, $response->getStatusCode());
@@ -280,7 +280,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPatchCardErrorValue(){
         $client = static::createClient();
-        $client->request('PATCH', '/api/card/3', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"creditCardNumber": "0987654312345678","value":"60000000"}');
+        $client->request('PATCH', '/api/card/3', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin'],'{"creditCardNumber": "0987654312345678","value":"60000000"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(400, $response->getStatusCode());
@@ -289,7 +289,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPatchUsers(){
         $client = static::createClient();
-        $client->request('PATCH', '/api/admin/users/26', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"country": "Japan"}');
+        $client->request('PATCH', '/api/admin/users/6', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin'],'{"country": "Japan"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(200, $response->getStatusCode());
@@ -298,7 +298,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPatchUsersErrorToken(){
         $client = static::createClient();
-        $client->request('PATCH', '/api/admin/users/26', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'efgbhrbgbreh'],'{"country": "Japan"}');
+        $client->request('PATCH', '/api/admin/users/6', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'azerty'],'{"country": "Japan"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(403, $response->getStatusCode());

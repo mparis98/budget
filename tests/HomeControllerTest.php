@@ -37,7 +37,7 @@ class HomeControllerTest extends WebTestCase{
 
     public function testGetSub()   {
         $client = static::createClient();
-        $client->request('GET', '/subscription/41', [], [], ['HTTP_ACCEPT' => 'application/json']);
+        $client->request('GET', '/subscription/1', [], [], ['HTTP_ACCEPT' => 'application/json']);
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(200, $response->getStatusCode());
