@@ -244,7 +244,7 @@ class UsersControllerTest extends WebTestCase{
 
     public function testPatchSubErrorUrl(){
         $client = static::createClient();
-        $client->request('PATCH', '/api/admin/subscription/32', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'd41d8cd98f00b204e9800998ecf8427e'],'{"name": "Coucou rge","url":"/github.com/mparis98/budget"}');
+        $client->request('PATCH', '/api/admin/subscription/32', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin'],'{"name": "Coucou rge","url":"/github.com/mparis98/budget"}');
         $response = $client->getResponse();
         $content = $response->getContent();
         $this->assertEquals(400, $response->getStatusCode());
