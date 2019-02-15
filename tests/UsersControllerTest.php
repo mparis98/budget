@@ -247,7 +247,7 @@ class UsersControllerTest extends WebTestCase{
         $client->request('PATCH', '/api/admin/subscription/32', [], [],['HTTP_ACCEPT' => 'application/json','CONTENT_TYPE' => 'application/json','HTTP_X-AUTH-TOKEN' => 'admin'],'{"name": "Coucou rge","url":"/github.com/mparis98/budget"}');
         $response = $client->getResponse();
         $content = $response->getContent();
-        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertEquals(404, $response->getStatusCode());
         $this->assertJson($content);
     }
 
